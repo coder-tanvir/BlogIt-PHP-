@@ -1,7 +1,27 @@
 
 <?php
+require 'includes/database.php';
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-        var_dump($_POST);
+    $sql="INSERT INTO article (title,content,published_at)
+            VALUES(?,?,?)";
+    
+    $stmt=mysqli_prepare($conn,$sql);        
+
+    
+    if($stmt===false){
+        echo mysqli_error($conn);
+    }else{
+        mysqli_stmt_bind_param($stmt,"sss", $_POST['title'],$_POST['content'],$_POST['published_at']);
+
+        if(mysqli_stmt_execute($stmt)){
+            $genid=mysqli_insert_id($conn);
+            echo "The generated ID is $genid";
+        }else{
+            echo mysqli_stmt_error($stmt);
+        }
+    
+    }
+    
 }
 ?>
 
