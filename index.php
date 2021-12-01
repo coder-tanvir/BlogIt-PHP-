@@ -15,19 +15,7 @@ if($results===false){
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My blog</title>
-    <meta charset="utf-8">
-</head>
-<body>
-
-    <header>
-        <h1>My blog</h1>
-    </header>
-
-    <main>
+<?php require 'includes/header.php';?>
         <?php if (empty($articles)): ?>
             <p>No articles found.</p>
         <?php else: ?>
@@ -44,6 +32,4 @@ if($results===false){
             </ul>
 
         <?php endif; ?>
-    </main>
-</body>
-</html>
+<?php require 'includes/footer.php';?>
