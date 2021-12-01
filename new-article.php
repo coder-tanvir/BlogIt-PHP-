@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
         if(mysqli_stmt_execute($stmt)){
             $genid=mysqli_insert_id($conn);
-            echo "The generated ID is $genid";
+            
         }else{
             echo mysqli_stmt_error($stmt);
         }
