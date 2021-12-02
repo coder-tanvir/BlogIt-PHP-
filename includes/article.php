@@ -3,8 +3,11 @@
 //Function is used for getting individual articles
 ////i means the integer ID value.
 ///Returns a associative array of value
-function get_Article($conn,$id){
-    $sql="SELECT * from article WHERE id=?";
+/** 
+*@param $columns is the optional list of columns, that user can sepcify
+*/
+function get_Article($conn,$id,$columns='*'){
+    $sql="SELECT $columns from article WHERE id=?";
     $stmt=mysqli_prepare($conn,$sql);
 
     if($stmt===false){
