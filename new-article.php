@@ -18,9 +18,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }
 
     if($_POST['published_at']==''){
-        $date=NULL;
+        $published_at=NULL;
     }else{
-        $date=$_POST['published_at'];
+        $published_at=$_POST['published_at'];
     }
     var_dump($errors);
     if(empty($errors)){
@@ -37,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     if($stmt===false){
         echo mysqli_error($conn);
     }else{
-        mysqli_stmt_bind_param($stmt,"sss", $_POST['title'],$content,$date);
+        mysqli_stmt_bind_param($stmt,"sss", $_POST['title'],$content,$published_at);
 
         if(mysqli_stmt_execute($stmt)){
             $genid=mysqli_insert_id($conn);
