@@ -28,6 +28,7 @@ if($results===false){
                         <article>
                             <h2><a href="article.php?id=<?= $article['id'];?>"><?= $article['title']; ?></h2>
                             <p><?= $article['content']; ?></p>
+                            <p><a href="edit-article.php?id=<?= $article['id'];?>">Edit Article</p>
                         </article>
                     </li>
                 <?php endforeach; ?>

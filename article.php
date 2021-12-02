@@ -1,24 +1,15 @@
 <?php
 
 require "includes/database.php";
-
-if(is_numeric($_GET['id'])){
+require "includes/article.php";
 $conn=getDB();
 
-
-$sql="SELECT * from article WHERE id=".$_GET['id'];
-
-$results=mysqli_query($conn,$sql);
-
-if($results===false){
-    echo mysqli_error($conn);
-}else{
-    $article=mysqli_fetch_assoc($results);
-
-}
-}else{
-    $articel=null;
-}
+if(isset($_GET['id'])){
+    $article=get_Article($conn,$_GET['id']);
+    }
+else{
+     $articel=null;
+    }
 
 ?>
 
