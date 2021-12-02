@@ -1,4 +1,6 @@
 <?php
+
+function getDB(){
 $db_host="localhost";
 $db_name="cms";
 $db_user="cms_world";
@@ -10,5 +12,6 @@ if(mysqli_connect_error()){
     echo mysqli_connect_error();
     exit;
 }
-
+    return $conn;
 echo "Connected Successfully";
+}

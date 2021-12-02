@@ -1,6 +1,7 @@
 
 <?php
 include "includes/database.php";
+$conn=getDB();
 
 $sql="SELECT * from article ORDER BY published_at;";
 
