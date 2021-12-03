@@ -2,10 +2,14 @@
 
 require "includes/database.php";
 require "includes/article.php";
-$conn=getDB();
+require 'classes/Database.php';
+require 'classes/Article.php';
+
+$db=new Database();
+$conn=$db->getConn();
 
 if(isset($_GET['id'])){
-    $article=get_Article($conn,$_GET['id']);
+    $article=Article::getByID($conn,$_GET['id']);
     }
 else{
      $articel=null;
@@ -22,15 +26,15 @@ else{
 
                     <li>
                         <article>
-                            <h2><?= $article['title']; ?></a></h2>
-                            <p><?= $article['content']; ?></p>
+                            <h2><?= $article->title; ?></a></h2>
+                            <p><?= $article->content; ?></p>
                         </article>
                     </li>
                 
             </ul>
 
         <?php endif; ?>
-            <a href="edit-article.php?id=<?= $article['id']; ?>">Edit</a>
-            <a href="delete-article.php?id=<?= $article['id']; ?>">Delete</a>
+            <a href="edit-article.php?id=<?= $article->id; ?>">Edit</a>
+            <a href="delete-article.php?id=<?= $article->id; ?>">Delete</a>
 
     <?php require 'includes/footer.php'; ?>

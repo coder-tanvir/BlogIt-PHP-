@@ -1,21 +1,33 @@
 
 <?php
-include "includes/database.php";
+require 'classes/Database.php';
 include "includes/auth.php";
+require "classes/Article.php";
 session_start();
+//Comments are functional way to do the same thing.
+///Refactoring to PDO
 
-$conn=getDB();
 
-$sql="SELECT * from article ORDER BY published_at;";
+$db=new Database();
+$conn=$db->getConn();
 
-$results=mysqli_query($conn,$sql);
+//Function
+//$conn=getDB();
 
-if($results===false){
-    echo mysqli_error($conn);
-}else{
-    $articles=mysqli_fetch_all($results,MYSQLI_ASSOC);
+//$sql="SELECT * from article ORDER BY published_at;";
+//$results=mysqli_query($conn,$sql);
+//$articles=mysqli_fetch_all($results,MYSQLI_ASSOC);
 
-}
+//PDO
+//if($results===false){
+    //echo mysqli_error($conn);
+
+//$results=$conn->query($sql);
+// $conn->errorInfo();
+//}else{
+    //$articles=$results->fetchAll(PDO::FETCH_ASSOC);
+//}
+$articles=Article::getAll($conn);
 
 ?>
 

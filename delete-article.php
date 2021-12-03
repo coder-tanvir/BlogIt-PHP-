@@ -1,32 +1,29 @@
 <?php
 
+require "classes/Database.php";
+require "classes/Article.php";
 require 'includes/database.php';
 require 'includes/article.php';
 
-$conn=getDB();
+$db=new Database();
+$conn=$db->getConn();
 
 if(isset($_GET['id'])){
-    $article=get_Article($conn,$_GET['id'],'id');
+    $article=Article::getByID($conn,$_GET['id'],'id');
 
     if($article){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
 
-        $sql="DELETE FROM article WHERE id=?";
-        $stmt=mysqli_prepare($conn,$sql);
+        $sql="DELETE FROM article WHERE id=:id";
+        //$stmt=mysqli_prepare($conn,$sql);
+            $stmt=$conn->prepare($sql);
+            $stmt->bindValue(':id',$article->id,PDO::PARAM_INT);
+            $stmt->execute();
 
-        if($stmt==false){
-            echo mysqli_error($conn);
-        }else{
-            mysqli_stmt_bind_param($stmt,"i",$_GET['id']);
-            if(mysqli_stmt_execute($stmt)){
-                header("Location:index.php");
-            }else{
-                echo mysqli_stmt_error($stmt);
-            }
-        }
+            header("Location:index.php");
     }
 
-    }else{
+}else{
         echo'No such Article';
     }
 }
