@@ -1,6 +1,14 @@
 
 <?php
 require 'includes/database.php';
+require 'includes/auth.php';
+
+session_start();
+
+if(! isLoggedin()){
+    die('unauthorized');
+    header("Location:login.php");
+}
 $errors=[];
 $title='';
 $content='';
