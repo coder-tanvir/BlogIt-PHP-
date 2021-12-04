@@ -1,6 +1,7 @@
 
 <?php
 require 'classes/Database.php';
+require "classes/Auth.php";
 include "includes/auth.php";
 require "classes/Article.php";
 session_start();
@@ -33,7 +34,7 @@ $articles=Article::getAll($conn);
 
 <?php require 'includes/header.php';?>
 
-<?php if(isLoggedin()): ?>
+<?php if(Auth::isLoggedin()): ?>
     <p>You are Logged in</p>
     <a href="logout.php">Logout</a>
     <a href="new-article.php">New Article</a>
