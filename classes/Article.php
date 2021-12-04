@@ -11,7 +11,7 @@ class Article
      public $title;
      public $content;
      public $published_at; 
-
+    public $image_file;
 
 
     public static function getAll($conn)
@@ -79,6 +79,21 @@ class Article
              return $conn->query('SELECT COUNT(*) FROM article')->fetchColumn();
          }
 
+         /**
+          * @param object $conn Connection to the database
+          *@param String $filename the filename of the image file
+          *@return boolean true if it was successfull, false otherwise
+          */
 
+         public function setImageFile($conn,$filename){
+             $sql="UPDATE article
+                    SET image_file= :image_file
+                    WHERE id = :id";
+                $stmt=$conn->prepare($sql);
+                $stmt->bindValue(':id',$this->id,PDO::PARAM_INT);
+                $stmt->bindValue(':image_file',$filename,PDO::PARAM_STR);
+
+                return $stmt->execute();
+         }
 
 }

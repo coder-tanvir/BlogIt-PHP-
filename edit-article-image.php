@@ -48,9 +48,26 @@ else{
         if(! in_array($_FILES['file']['type'],$mime_types)){
             throw new Exception('Invalid file type');
         }
-        $destination="uploads/" . $_FILES['file']['name'];
+
+        //Moving the uploaded file
+
+        $pathinfo=pathinfo($_FILES["file"]["name"]);
+        $base=$pathinfo['filename'];
+        $base=preg_replace('/[^a-zA-Z0-9_-]/','_',$base);
+        $filename=$base. "." . $pathinfo['extension'];
+        $destination="uploads/$filename";
+
+        $i=1;
+        //changing the file name if it exists
+        while(file_exists($destination)){
+            $filename=$base . "-$i." . $pathinfo['extension'];
+            $destination="uploads/$filename";
+            $i++;
+        }
         if(move_uploaded_file($_FILES['file']['tmp_name'],$destination)){
-            echo "upload successfull";
+            if($article->setImageFile($conn,$filename)){
+                header("Location:article.php?id={$article->id}");   
+            }            
         }else{
             throw new Exception('unable to move uploaded file');
         }

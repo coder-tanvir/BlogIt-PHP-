@@ -27,6 +27,9 @@ else{
                     <li>
                         <article>
                             <h2><?= $article->title; ?></a></h2>
+                            <?php if($article->image_file): ?>
+                                <img src="uploads/<?=$article->image_file; ?>">
+                            <?php endif; ?>
                             <p><?= $article->content; ?></p>
                             <a href="edit-article-image.php?id=<?=$article->id; ?>">Edit-Image</a>
                         </article>
