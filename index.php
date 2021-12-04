@@ -1,9 +1,7 @@
 
 <?php
-require 'classes/Database.php';
-require "classes/Auth.php";
-include "includes/auth.php";
-require "classes/Article.php";
+require "includes/init.php";
+
 session_start();
 //Comments are functional way to do the same thing.
 ///Refactoring to PDO
@@ -28,36 +26,64 @@ $conn=$db->getConn();
 //}else{
     //$articles=$results->fetchAll(PDO::FETCH_ASSOC);
 //}
-$articles=Article::getAll($conn);
+if(isset($_GET['page'])){
+    $paginator=new Paginator($_GET['page'],2,Article::getTotal($conn));
+}else{
+    $paginator=new Paginator(1,4); 
+}
+
+$articles=Article::getPage($conn,$paginator->limit,$paginator->offset);
 
 ?>
 
 <?php require 'includes/header.php';?>
 
-<?php if(Auth::isLoggedin()): ?>
-    <p>You are Logged in</p>
-    <a href="logout.php">Logout</a>
-    <a href="new-article.php">New Article</a>
-<?php else: ?>
-<p>Please log in</p>
-<a href="login.php">Login</a>
-<?php endif; ?>
 
         <?php if (empty($articles)): ?>
             <p>No articles found.</p>
         <?php else: ?>
 
+            
+
             <ul>
+            <?php if(Auth::isLoggedIn()): ?>
                 <?php foreach ($articles as $article): ?>
                     <li>
                         <article>
                             <h2><a href="article.php?id=<?= $article['id'];?>"><?= $article['title']; ?></h2>
                             <p><?= $article['content']; ?></p>
-                            <p><a href="edit-article.php?id=<?= $article['id'];?>">Edit Article</p>
+                            <a href="edit-article.php?id=<?= $article['id']; ?>">Edit Article</a>
+                            <a href="delete-article.php?id=<?= $article['id']; ?>">Delete Article</a>
                         </article>
                     </li>
                 <?php endforeach; ?>
+            <?php else: ?>
+                <?php foreach ($articles as $article): ?>
+                    <li>
+                        <article>
+                            <h2><a href="article.php?id=<?= $article['id'];?>"><?= $article['title']; ?></h2>
+                            <p><?= $article['content']; ?></p>
+                           
+                        </article>
+                    </li>
+                    <?php endforeach; ?>
             </ul>
+            <?php endif; ?>
+            <nav>
+                <ul>
+                    <?php if($paginator->previous): ?>
+                <li><a href="?page=<?=$paginator->previous; ?>">Previous</a></li>
+                <?php else: ?> 
+                    Previous
+                <?php endif; ?>
 
+                <?php if($paginator->next): ?>
+                <li><a href="?page=<?=$paginator->next; ?>">Next</a></li>
+                </ul>
+                <?php else: ?>
+                    Next
+                <?php endif; ?>
+            </nav>
         <?php endif; ?>
-<?php require 'includes/footer.php';?>
+
+<?php require 'includes/footer.php'; ?>

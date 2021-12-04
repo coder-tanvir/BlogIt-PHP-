@@ -1,6 +1,5 @@
 <?php
-require "classes/User.php";
-require "classes/Database.php";
+require "includes/init.php";
 
 session_start();
 

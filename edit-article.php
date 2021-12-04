@@ -1,9 +1,6 @@
 <?php
 
-require "includes/database.php";
-require "includes/article.php";
-require "classes/Database.php";
-require "classes/Article.php";
+require "includes/init.php";
 
 //$conn=getDB();
 $db=new Database();

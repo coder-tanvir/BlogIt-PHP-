@@ -48,4 +48,37 @@ class Article
             }
     }
 
+        /**
+         * Pagination
+         * 
+         */
+
+         public static function getpage($conn,$limit,$offset){
+
+            $sql="SELECT * 
+                 FROM article 
+                 ORDER BY published_at
+                 LIMIT :limit
+                 OFFSET :offset";
+                 
+            $stmt=$conn->prepare($sql);
+            
+            $stmt->bindValue(':limit',$limit,PDO::PARAM_INT);
+            $stmt->bindValue(':offset',$offset,PDO::PARAM_INT);
+
+            $stmt->execute();
+    
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+         }
+
+         /**
+          * @return total number of records
+          */
+
+         public static function getTotal($conn){
+             return $conn->query('SELECT COUNT(*) FROM article')->fetchColumn();
+         }
+
+
+
 }
