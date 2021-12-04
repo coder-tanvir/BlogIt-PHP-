@@ -27,9 +27,10 @@ $conn=$db->getConn();
     //$articles=$results->fetchAll(PDO::FETCH_ASSOC);
 //}
 if(isset($_GET['page'])){
-    $paginator=new Paginator($_GET['page'],2,Article::getTotal($conn));
+    
+    $paginator=new Paginator($_GET['page'], 2 ,Article::getTotal($conn));
 }else{
-    $paginator=new Paginator(1,4); 
+    $paginator=new Paginator(1,4,Article::getTotal($conn)); 
 }
 
 $articles=Article::getPage($conn,$paginator->limit,$paginator->offset);

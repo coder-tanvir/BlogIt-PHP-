@@ -17,12 +17,13 @@ class Paginator
     public function __construct($page,$records_per_page,$total_count)
     {
         $this->limit=$records_per_page;
-        $page=filter_var($page, FILTER_VALIDATE_INT,[
+        $page=filter_var($page,FILTER_VALIDATE_INT,[
             'options' => [
                 'default' => 1,
                 'min_range' => 1
             ]
-        ]);
+            ]);
+            
 
         $nextlimit=$total_count / $records_per_page;
             if($page>1){

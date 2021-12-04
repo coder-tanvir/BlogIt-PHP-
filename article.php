@@ -28,6 +28,7 @@ else{
                         <article>
                             <h2><?= $article->title; ?></a></h2>
                             <p><?= $article->content; ?></p>
+                            <a href="edit-article-image.php?id=<?=$article->id; ?>">Edit-Image</a>
                         </article>
                     </li>
                 
