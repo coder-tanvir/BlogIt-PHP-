@@ -28,9 +28,9 @@ $conn=$db->getConn();
 //}
 if(isset($_GET['page'])){
     
-    $paginator=new Paginator($_GET['page'], 2 ,Article::getTotal($conn));
+    $paginator=new Paginator($_GET['page'], 3 ,Article::getTotal($conn));
 }else{
-    $paginator=new Paginator(1,4,Article::getTotal($conn)); 
+    $paginator=new Paginator(1,3 ,Article::getTotal($conn)); 
 }
 
 $articles=Article::getPage($conn,$paginator->limit,$paginator->offset);
@@ -46,12 +46,12 @@ $articles=Article::getPage($conn,$paginator->limit,$paginator->offset);
 
             
 
-            <ul>
+            <ul id="index">
             <?php if(Auth::isLoggedIn()): ?>
                 <?php foreach ($articles as $article): ?>
                     <li>
                         <article>
-                            <h2><a href="article.php?id=<?= $article['id'];?>"><?= $article['title']; ?></h2>
+                            <h2><a class="articlename" href="article.php?id=<?= $article['id'];?>"><?= $article['title']; ?></h2>
                             <p><?= $article['content']; ?></p>
                             <a href="edit-article.php?id=<?= $article['id']; ?>">Edit Article</a>
                             <a href="delete-article.php?id=<?= $article['id']; ?>">Delete Article</a>
@@ -71,18 +71,18 @@ $articles=Article::getPage($conn,$paginator->limit,$paginator->offset);
             </ul>
             <?php endif; ?>
             <nav>
-                <ul>
+                <ul class="pagination">
                     <?php if($paginator->previous): ?>
-                <li><a href="?page=<?=$paginator->previous; ?>">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="?page=<?=$paginator->previous; ?>">Previous</a></li>
                 <?php else: ?> 
-                    Previous
+                   <span class="page-link"> Previous </span>
                 <?php endif; ?>
 
                 <?php if($paginator->next): ?>
-                <li><a href="?page=<?=$paginator->next; ?>">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page=<?=$paginator->next; ?>">Next</a></li>
                 </ul>
                 <?php else: ?>
-                    Next
+                   <span class="page-link"> Next </span>
                 <?php endif; ?>
             </nav>
         <?php endif; ?>

@@ -26,15 +26,15 @@ session_start();
 <?php endif; ?>
 
 <form method="POST">
-    <div>
+    <div class="mb-3">
         <label for="username">Username</label>
-        <input name="username" id="username">
+        <input class="form-control" name="username" id="username">
     </div>
-    <div>
+    <div class="mb-3">
         <label for="password">Password</label>
-        <input name="password" type="password" id="password">
+        <input class="form-control" name="password" type="password" id="password">
     </div>
-    <button>Log in</button>
+    <button class="btn btn-primary">Log in</button>
 
 </form>
 

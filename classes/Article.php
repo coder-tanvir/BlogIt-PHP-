@@ -96,4 +96,22 @@ class Article
                 return $stmt->execute();
          }
 
+         public static function getWithCategories($conn,$id){
+             $sql="SELECT *
+                    FROM article 
+                    LEFT JOIN article_category
+                    ON article.id=article_category.article_id
+                    LEFT JOIN categorie
+                    ON article_category.category_id=categorie.id
+                    WHERE article.id=:id";
+
+                    $stmt=$conn->prepare($sql);
+
+                    $stmt->bindValue(':id',$id,PDO::PARAM_INT);
+
+                    $stmt->execute();
+
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+         }
+
 }

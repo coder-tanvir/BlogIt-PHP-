@@ -1,0 +1,16 @@
+ul#index {
+  padding-left: 0;
+}
+
+ul#index li {
+  list-style-type: none;
+}
+
+.articlename {
+  color: black;
+}
+
+.size {
+  width: 400px;
+  height: 300px;
+}
